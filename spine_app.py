@@ -4,31 +4,28 @@ import random
 import plotly.graph_objects as go
 from datetime import datetime
 
-# --- PAGE CONFIGURATION & ADVANCED CSS ---
+# --- PAGE CONFIGURATION & ERGONOMIC CSS ---
 st.set_page_config(page_title="S.P.I.N.E. Core Command", layout="wide", initial_sidebar_state="expanded")
 
 st.markdown("""
     <style>
-    /* Dark Cyberpunk Theme */
-    .stApp { background-color: #050914; color: #00E5FF; font-family: 'Courier New', Courier, monospace; }
-    h1, h2, h3 { color: #00E5FF !important; text-shadow: 0 0 5px #00E5FF; }
+    /* Ergonomic Slate Dark Theme */
+    .stApp { background-color: #0F172A; color: #E2E8F0; font-family: 'Inter', 'Segoe UI', sans-serif; }
+    h1, h2, h3, h4 { color: #38BDF8 !important; font-weight: 500; }
     
-    /* Panel Styling */
+    /* Panel Styling - Softer borders and shadows */
     .css-1d391kg { padding: 2rem; }
-    .st-emotion-cache-1y4p8pa { padding: 2rem; border-radius: 10px; background: rgba(10, 20, 40, 0.8); border: 1px solid #00E5FF; box-shadow: 0 0 15px rgba(0, 229, 255, 0.2); }
+    .st-emotion-cache-1y4p8pa { padding: 2rem; border-radius: 8px; background: #1E293B; border: 1px solid #334155; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
     
-    /* Alerts */
-    .alert-critical { background: rgba(255, 0, 0, 0.1); border-left: 5px solid #FF003C; color: #FF003C; padding: 15px; font-weight: bold; text-shadow: 0 0 5px #FF003C; animation: pulse 1.5s infinite; }
-    .alert-safe { background: rgba(0, 255, 0, 0.1); border-left: 5px solid #00FF66; color: #00FF66; padding: 15px; font-weight: bold; text-shadow: 0 0 5px #00FF66; }
+    /* Alerts - Muted pastels instead of harsh neon */
+    .alert-critical { background: rgba(239, 68, 68, 0.1); border-left: 4px solid #EF4444; color: #FCA5A5; padding: 15px; border-radius: 4px; font-weight: 500; }
+    .alert-safe { background: rgba(34, 197, 94, 0.1); border-left: 4px solid #22C55E; color: #86EFAC; padding: 15px; border-radius: 4px; font-weight: 500; }
     
-    /* Terminal Console */
-    .terminal-box { background-color: #000; color: #00FF66; padding: 10px; border-radius: 5px; font-family: monospace; border: 1px solid #333; height: 150px; overflow-y: auto; }
+    /* Terminal Console - Deep dark blue with soft mint text */
+    .terminal-box { background-color: #020617; color: #A7F3D0; padding: 12px; border-radius: 6px; font-family: 'Fira Code', Consolas, monospace; border: 1px solid #1E293B; height: 150px; overflow-y: auto; white-space: pre-wrap; }
     
-    @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(255, 0, 60, 0.4); }
-        70% { box-shadow: 0 0 0 10px rgba(255, 0, 60, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(255, 0, 60, 0); }
-    }
+    /* Make standard text highly legible */
+    p, div, span { color: #CBD5E1; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -50,8 +47,8 @@ edge_model = AdvancedEdgePINN()
 
 # --- SIDEBAR: SECS/GEM TELEMETRY INJECTION (Machine A) ---
 with st.sidebar:
-    st.markdown("<h2 style='text-align: center; color: #00E5FF; text-shadow: 0 0 10px #00E5FF;'>S.P.I.N.E.</h2>", unsafe_allow_html=True)
-    st.markdown("<hr style='border: 1px solid #00E5FF; margin-top: 0;'>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; color: #38BDF8;'>S.P.I.N.E.</h2>", unsafe_allow_html=True)
+    st.markdown("<hr style='border: 1px solid #334155; margin-top: 0;'>", unsafe_allow_html=True)
     
     st.markdown("### 📡 SECS/GEM Injection")
     st.caption("Override Machine A (Wire Bonder) Telemetry")
@@ -94,39 +91,38 @@ col_radar, col_gauge, col_action = st.columns([1, 1, 1.2])
 # 1. Radar Chart: The Data Tensor
 with col_radar:
     st.markdown("<h4 style='text-align: center;'>Multivariate Tensor Map</h4>", unsafe_allow_html=True)
-    # Normalize values for radar visualization (0 to 1 scale)
     categories = ['Z-Axis', 'Velocity', 'Force Inv.', 'Impedance Inv.', 'Temp Inv.', 'EFO']
     values = [z_axis/250, impact_vel/10, (80-bond_force)/70, (120-ultrasonic)/100, (260-pad_temp)/110, efo/50]
     
     fig_radar = go.Figure(data=go.Scatterpolar(
-      r=values, theta=categories, fill='toself', line_color='#00E5FF', fillcolor='rgba(0, 229, 255, 0.2)'
+      r=values, theta=categories, fill='toself', line_color='#38BDF8', fillcolor='rgba(56, 189, 248, 0.2)'
     ))
-    fig_radar.update_layout(polar=dict(radialaxis=dict(visible=False, range=[0, 1])), paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='#00E5FF'), margin=dict(l=20, r=20, t=20, b=20))
+    fig_radar.update_layout(polar=dict(radialaxis=dict(visible=False, range=[0, 1])), paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', font=dict(color='#E2E8F0'), margin=dict(l=20, r=20, t=20, b=20))
     st.plotly_chart(fig_radar, use_container_width=True)
 
 # 2. Gauge Chart: SVI Score
 with col_gauge:
     st.markdown("<h4 style='text-align: center;'>Predictive SVI Index</h4>", unsafe_allow_html=True)
-    gauge_color = "#FF003C" if svi_score > threshold else "#00FF66"
+    gauge_color = "#EF4444" if svi_score > threshold else "#22C55E"
     
     fig_gauge = go.Figure(go.Indicator(
         mode = "gauge+number+delta",
         value = svi_score,
         domain = {'x': [0, 1], 'y': [0, 1]},
-        delta = {'reference': threshold, 'increasing': {'color': "#FF003C"}, 'decreasing': {'color': "#00FF66"}},
+        delta = {'reference': threshold, 'increasing': {'color': "#EF4444"}, 'decreasing': {'color': "#22C55E"}},
         gauge = {
-            'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "white"},
+            'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "#94A3B8"},
             'bar': {'color': gauge_color},
             'bgcolor': "rgba(0,0,0,0)",
             'borderwidth': 2,
-            'bordercolor': "#333",
+            'bordercolor': "#334155",
             'steps': [
-                {'range': [0, 75], 'color': "rgba(0, 255, 102, 0.1)"},
-                {'range': [75, 100], 'color': "rgba(255, 0, 60, 0.2)"}],
-            'threshold': {'line': {'color': "white", 'width': 4}, 'thickness': 0.75, 'value': threshold}
+                {'range': [0, 75], 'color': "rgba(34, 197, 94, 0.1)"},
+                {'range': [75, 100], 'color': "rgba(239, 68, 68, 0.1)"}],
+            'threshold': {'line': {'color': "#F8FAFC", 'width': 4}, 'thickness': 0.75, 'value': threshold}
         }
     ))
-    fig_gauge.update_layout(paper_bgcolor='rgba(0,0,0,0)', font=dict(color='white'), margin=dict(l=20, r=20, t=20, b=20))
+    fig_gauge.update_layout(paper_bgcolor='rgba(0,0,0,0)', font=dict(color='#E2E8F0'), margin=dict(l=20, r=20, t=20, b=20))
     st.plotly_chart(fig_gauge, use_container_width=True)
 
 # 3. Dynamic Actuation Control Logic
@@ -155,7 +151,6 @@ with col_action:
 st.divider()
 st.markdown("### 🖥️ Edge AI Sub-Routine Logs")
 
-# Simulated console log based on current parameters (Fixed time formatting)
 current_time = datetime.now().strftime('%H:%M:%S.%f')[:-3]
 
 log_content = f"""[SYS.TIME] {current_time} | SECS/GEM connection verified.
