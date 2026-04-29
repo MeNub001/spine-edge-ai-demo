@@ -34,3 +34,19 @@ Ensure you have Python 3.8+ installed.
    ```bash
    git clone [https://github.com/YourUsername/spine-edge-ai-demo.git](https://github.com/YourUsername/spine-edge-ai-demo.git)
    cd spine-edge-ai-demo
+   ```
+
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Launch the Edge Command Center:
+   ```bash
+   streamlit run spine_app.py
+   ```
+   *The dashboard will automatically open in your default web browser at `http://localhost:8501`.*
+
+## 👥 Team: UTP Teletubbies
+* **Geoffrey Lee Jin Yau** * **Kelvin Law Yun Hong** * **Ng Yao Yang** * **Nicholas Tan Hong Junn** *Universiti Teknologi PETRONAS (UTP) - Faculty of Engineering*
+```
